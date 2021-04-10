@@ -1,0 +1,124 @@
+{% extends "layout.html" %} {% block content %}
+
+<div class="body-main">
+  <section class="landing">
+    <div class="container_landing">
+      <!-- <div class="row ">
+            <div class="col-md-offset-3 col-md-3 username"><h2>{{displayname}}</h2></div>
+        </div> -->
+      <header>
+        <a href="#" class="logo">{{displayname}}</a>
+        <ul>
+          <li><a href="/login" class="active">LOGIN</a></li>
+          <li><a href="/register">REGISTER</a></li>
+          <li><a href="/logout">LOGOUT</a></li>
+          <li><a href="{{ url_for('form') }}">FILL FORM</a></li>
+        </ul>
+      </header>
+      <div class="content mt-3">
+        <h2 class="text-animation" style="color: #6c63ff">GROOVE</h2>
+        <p>
+          A carpooling service which matches people on the basis of their
+          interests, and personality types.
+        </p>
+        <a href="{{ url_for('map1') }}">pool</a>
+      </div>
+      <div class="imgbx">
+        <img
+          src="/static/images/undraw_off_road_9oae.svg"
+          style="margin-right: 10px"
+        />
+      </div>
+    </div>
+  </section>
+  <section class="what p-0">
+    <div class="container_what">
+      <div class="container__card">
+        <div class="container__card--content">
+          <h2 class="number">01</h2>
+          <h3 class="number-heading">REGISTER AND LOGIN</h3>
+          <p>Register for our services so that we could help you</p>
+          <a href="#" class="what-a" style="color: #6c63ff">Read More</a>
+        </div>
+      </div>
+      <div class="container__card">
+        <div class="container__card--content">
+          <h2 class="number">02</h2>
+          <h3 class="number-heading">FILL THE FORM</h3>
+          <p>to help us analyse what type of a person you are</p>
+          <a href="#" class="what-a" style="color: #6c63ff">Read More</a>
+        </div>
+      </div>
+      <div class="container__card">
+        <div class="container__card--content">
+          <h2 class="number">03</h2>
+          <h3 class="number-heading">CHOOSE YOUR DESTINATION</h3>
+          <p>choose your destination and leave it to us</p>
+          <a href="#" class="what-a" style="color: #6c63ff">Read More</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="testimonials">
+    <div class="container">
+      <h2 class="text-white mb-5">WHAT ARE THEY SAYING ABOUT US?</h2>
+      <hr class="hr" />
+      <div class="row">
+        <div class="col-lg-4 d-flex justify-content-center">
+          <div class="card">
+            <div class="card-body text-center">
+              <div class="card-img pt-2 pb-3">
+                <img
+                  src="https://images.pexels.com/photos/6625914/pexels-photo-6625914.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                  alt=""
+                />
+              </div>
+              <div class="name h5">Lisa Stephen</div>
+              <div class="testimonial">
+                I made bacck the purchase price in just 48 hours ! Thank you for
+                making pain less, pleasant. The service was execellent. I will
+                refer everyone I know
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 d-flex justify-content-center">
+          <div class="card">
+            <div class="card-body text-center">
+              <div class="card-img pt-2 pb-3">
+                <img
+                  src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                  alt=""
+                />
+              </div>
+              <div class="name h5">Hermione Granger</div>
+              <div class="testimonial">
+                I made bacck the purchase price in just 48 hours ! Thank you for
+                making pain less, pleasant. The service was execellent. I will
+                refer everyone I know
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 d-flex justify-content-center">
+          <div class="card">
+            <div class="card-body text-center">
+              <div class="card-img pt-2 pb-3">
+                <img
+                  src="https://images.pexels.com/photos/4946604/pexels-photo-4946604.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                />
+              </div>
+              <div class="name h5">Millie Bobby</div>
+              <div class="testimonial">
+                I made bacck the purchase price in just 48 hours ! Thank you for
+                making pain less, pleasant. The service was execellent. I will
+                refer everyone I know
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock content %}

@@ -1,0 +1,14 @@
+{% extends "layout.html" %} {% block content %}
+
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-md-10">
+      <div id="map2"></div>
+    </div>
+    <div class="col-md-2">
+      <a class="btn btn-primary" href="{{ url_for('map2') }}">end ride</a>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
