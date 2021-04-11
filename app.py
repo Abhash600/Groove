@@ -4,6 +4,9 @@ import os
 import tweepy
 import api
 import ml
+import math
+import matching
+
 app= Flask(__name__)
 app.secret_key=os.urandom(24)
  
@@ -11,10 +14,6 @@ conn=mysql.connector.connect(host="remotemysql.com",user="9YwiYaINDg",password="
 cursor=conn.cursor()
 
 
-
-@app.route('/',methods=['GET', 'POST'])
-def index():
-    return render_template('home.html')
 
 
 
@@ -48,7 +47,7 @@ def loginval():
     if len(users)>0:
         session['user_id']=users[0][0]
         flash('account logged in')
-        return render_template('home.html',displayname=displayname)
+        return render_template('home.html')
         
     else:
         return redirect('/login')
@@ -63,6 +62,8 @@ def add_user():
     global phone_number
     global gender
     global twitter_id
+    global email
+    global password
     name=request.form.get('username')
     email=request.form.get('useremail')
     password=request.form.get('userpassword')
@@ -118,55 +119,72 @@ def form_data():
 
 
 @app.route('/map1')
-def map1():
-    
-    # #latitude and longitude stuff
-
-    # #matching personality
-    
-    cursor.execute("""SELECT * FROM `users` """)
-    records = cursor.fetchall()
-    d1= {record[0]: record[7] for record in records}
-    print(d)
-
-    # p1="INFP" # personality of user
-
-    # compatibility1={'INTP':'INTJ','ENFP':'INFJ',
-    # 'ENFJ':'INFP','ISTJ':'ESFP','ESTP':'ISFJ','ESFJ':'ISFP','ISTP':'ESTJ','INFJ':'ENTP',
-    # 'ENTJ':'INTP'
-    # }
-    
-    # compatibility2={'INTJ':'INTP',
-    # 'INFJ':'ENFP','INFP':'ENFJ',
-    # 'ESFP':'ISTJ','ISFJ':'ESTP',
-    # 'ISFP':'ESFJ',"ESTJ":"ISTP",
-    # 'ENTP':'INFJ','INTP':'ENTJ'
-    # }
-
-
-    # # matching answers
-    cursor.execute("""SELECT * FROM `users` """)
-    records = cursor.fetchall()
-    d2= {record[0]: record[8] for record in records}
-    print(d)
-
-
-    # st1="abcd"
-
-
-
-
-
-
-
-
+def map1():    
     return render_template('map1.html')
 
-@app.route('/map2')
+@app.route('/map2', methods=['GET','POST'])
 def map2():
-    return render_template('map2.html')
+    if request.method=="POST":
+        req=request.form
+        scoords=req['scoords']
+        ecoords=req['ecoords']
+        #print(scoords,ecoords)
+        cursor.execute("""SELECT * FROM `users`  WHERE `email` LIKE '{}' AND `password` LIKE '{}' """.format(email,password))
+        user=cursor.fetchone()
+        pooling=1
+        cursor.execute("""UPDATE `users` set pooling='{}' WHERE email='{}' """.format(pooling,email))
+        cursor.execute("""UPDATE `users` set starting_coords='{}' WHERE email='{}' """.format(scoords,email))
+        cursor.execute("""UPDATE `users` set ending_coords='{}' WHERE email='{}' """.format(ecoords,email))
+        conn.commit()
+    
+    # cursor.execute("""SELECT * FROM `users`  WHERE `email` LIKE '{}' AND `password` LIKE '{}' """.format(email,password))
+    # user=cursor.fetchone()
+    # A = user[10]
+    # B = user[11]
+    # #print(A,B)
+    # ll1=A.split(',')
+    # ll2=B.split(',')
+    # ll1=ll1[::-1]
+    # ll2=ll2[::-1]
+    # a1=(ll1[0),ll1[1])
+    # a2=(ll2[0],ll2[1])
+    # cursor.execute("""SELECT * FROM `users`""")
+    # users=cursor.fetchall()
+    # start={record[1]: record[10] for record in users}
+    # end={record[1]: record[11] for record in users}
+    # print(start)
+
+    cursor.execute("""SELECT * FROM `users`  WHERE `email` LIKE '{}' AND `password` LIKE '{}' """.format(email,password))
+    user=cursor.fetchone()
+    cursor.execute("""SELECT * FROM `users` """)
+    records = cursor.fetchall()
+    u1=(user[1],user[7])
+    u2=(user[1],user[8])
+    d1= {record[1]: record[7] for record in records}
+    d2= {record[1]: record[8] for record in records}
+    ss=matching.match(u2,d2)
+    print(ss)
+    # #latitudes and longitudes respectively (a1,a2),(b1,b2)
+    
+
+    
+    #     li=matching.personality(u1,d1)
+
+    #     if len(li)>4:
+    #         mate=matching.match(u3,d3)
+    #     else:
+    #         mate=matching.match(u2,d2)    
+    cursor.execute("""SELECT * FROM `users`  WHERE `name` LIKE '{}' """.format(ss))
+    usr_phn=cursor.fetchone()
+    phn=usr_phn[4]
+    pooling=0
+    cursor.execute("""UPDATE `users` set pooling='{}' WHERE email='{}' """.format(pooling,email))
+    return render_template('map2.html',ss=ss,phn=phn)
 
 
+@app.route('/',methods=['GET', 'POST'])
+def index():
+    return render_template('home.html')
 
 
 
